@@ -52,11 +52,53 @@ VL53L0X sensor_izquierdo, sensor_frontal, sensor_derecho;
 const short NUM_SENSORS =  7;
 short sensorPins[] = {SENSOR_1, SENSOR_2, SENSOR_3, SENSOR_4, SENSOR_5, SENSOR_6, SENSOR_7};
 
+////////////////////////
+//VARIABLES TEST PINS //
+////////////////////////
+const int debug_time = 500;
+bool led_state = false;
 
 void setup() {
-  // put your setup code here, to run once:
+  // Inicializa todos los componentes
+  init_all();
+
+  delay(2000);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  if(millis()%debug_time==0){
+    // Sensores láser
+    Serial.println("VL53L0X:");
+    Serial.print(sensor_izquierdo.readRangeSingleMillimeters());
+    Serial.println("\t");
+    Serial.print(sensor_frontal.readRangeSingleMillimeters());
+    Serial.println("\t");
+    Serial.print(sensor_derecho.readRangeSingleMillimeters());
+    Serial.print("\n\n");
+
+    // // Sensores IR
+    Serial.println("QRE1113:");
+    for (byte sensor = 0; sensor < NUM_SENSORS; sensor++) {
+      Serial.print(analogRead(sensorPins[sensor]));
+      if(sensor != (NUM_SENSORS-1)){
+        Serial.println("\t");
+      }
+    }
+    Serial.print("\n\n");
+
+    // Estado de botón y swtich
+    Serial.print("BTN: ");
+    Serial.println(digitalRead(BTN));
+    Serial.print("SW_1: ");
+    Serial.println(digitalRead(SW_1));
+    Serial.print("SW_2: ");
+    Serial.println(digitalRead(SW_2));
+    Serial.print("\n");
+
+    // Cambio estado led;
+    led_state = !led_state;
+    digitalWrite(LED, led_state);
+
+    Serial.println("============================================================");
+  }
 }
