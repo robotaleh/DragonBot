@@ -7,14 +7,15 @@
 * Función principal de inicialización de componentes.
 */
 void init_all(){
+  init_serial();
   init_motors();
   init_sensors();
   init_led_buttons();
 }
 
 /**
- * Inicialización del puerto Serial.
- */
+* Inicialización del puerto Serial.
+*/
 void init_serial(){
   Serial.begin(115200);
   while (!Serial){}
