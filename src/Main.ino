@@ -58,6 +58,9 @@ short sensorPins[] = {SENSOR_1, SENSOR_2, SENSOR_3, SENSOR_4, SENSOR_5, SENSOR_6
 const int debug_time = 500;
 bool led_state = false;
 
+volatile long ticks_derecho = 0;
+volatile long ticks_izquierdo = 0;
+
 void setup() {
   // Inicializa todos los componentes
   init_all();
@@ -95,10 +98,26 @@ void loop() {
     Serial.println(digitalRead(SW_2));
     Serial.print("\n");
 
+
+    // Estado de botón y swtich
+    Serial.print("ENC IZ: ");
+    Serial.println(ticks_izquierdo);
+    Serial.print("ENC DE: ");
+    Serial.println(ticks_derecho);
+
     // Cambio estado led;
     led_state = !led_state;
     digitalWrite(LED, led_state);
 
     Serial.println("============================================================");
   }
+}
+
+
+void encoder_derecho(){
+  ticks_derecho++;
+}
+
+void encoder_izquierdo(){
+  ticks_izquierdo++;
 }

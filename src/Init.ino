@@ -41,6 +41,13 @@ void init_motors(){
 
   digitalWrite(MOTOR_DERECHO_PWM, LOW);
   digitalWrite(MOTOR_IZQUIERDO_PWM, LOW);
+
+  pinMode(MOTOR_DERECHO_ENCODER,INPUT_PULLDOWN);
+  attachInterrupt(MOTOR_DERECHO_ENCODER, encoder_derecho, CHANGE);
+
+  pinMode(MOTOR_IZQUIERDO_ENCODER,INPUT_PULLDOWN);
+  attachInterrupt(MOTOR_IZQUIERDO_ENCODER, encoder_izquierdo, CHANGE);
+
 }
 
 /**
